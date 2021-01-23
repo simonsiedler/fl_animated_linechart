@@ -16,13 +16,13 @@ typedef TapText = String Function(String prefix, double y, String unit);
 class AnimatedLineChart extends StatefulWidget {
   final LineChart chart;
   final TapText tapText;
-  final Color axisColor;
+  final Color titleColor;
 
   const AnimatedLineChart(
     this.chart, {
     Key key,
     this.tapText,
-    this.axisColor,
+    this.titleColor,
   }) : super(key: key);
 
   @override
@@ -60,7 +60,7 @@ class _AnimatedLineChartState extends State<AnimatedLineChart> with SingleTicker
         widget.chart,
         _animation,
         tapText: widget.tapText,
-        axisColor: widget.axisColor,
+        titleColor: widget.titleColor,
       );
     });
   }
@@ -71,14 +71,14 @@ class _GestureWrapper extends StatefulWidget {
   final LineChart _chart;
   final Animation _animation;
   final TapText tapText;
-  final Color axisColor;
+  final Color titleColor;
 
   const _GestureWrapper(
     this._chart,
     this._animation, {
     Key key,
     this.tapText,
-    this.axisColor,
+    this.titleColor,
   }) : super(key: key);
 
   @override
@@ -98,7 +98,7 @@ class _GestureWrapperState extends State<_GestureWrapper> {
         _horizontalDragPosition,
         animation: widget._animation,
         tapText: widget.tapText,
-        axisColor: widget.axisColor,
+        titleColor: widget.titleColor,
       ),
       onTapDown: (tap) {
         _horizontalDragActive = true;
@@ -133,10 +133,10 @@ class _AnimatedChart extends AnimatedWidget {
   final bool _horizontalDragActive;
   final double _horizontalDragPosition;
   final TapText tapText;
-  final Color axisColor;
+  final Color titleColor;
 
   _AnimatedChart(this._chart, this._horizontalDragActive, this._horizontalDragPosition,
-      {this.tapText, this.axisColor, Key key, Animation animation})
+      {this.tapText, this.titleColor, Key key, Animation animation})
       : super(key: key, listenable: animation);
 
   @override
@@ -145,7 +145,7 @@ class _AnimatedChart extends AnimatedWidget {
 
     return CustomPaint(
       painter: ChartPainter(animation?.value, _chart, _horizontalDragActive, _horizontalDragPosition,
-          tapText: tapText, axisColor: axisColor),
+          tapText: tapText, titleColor: titleColor),
     );
   }
 }
@@ -179,15 +179,15 @@ class ChartPainter extends CustomPainter {
   final double _horizontalDragPosition;
 
   final TapText tapText;
-  final Color axisColor;
+  final Color titleColor;
 
   static final TapText _defaultTapText = (prefix, y, unit) => '$prefix: ${y.toStringAsFixed(1)} $unit';
   static final Color _defaultColor = Colors.black;
 
   ChartPainter(this._progress, this._chart, this._horizontalDragActive, this._horizontalDragPosition,
-      {TapText tapText, Color axisColor})
+      {TapText tapText, Color titleColor})
       : tapText = tapText ?? _defaultTapText,
-        axisColor = axisColor ?? _defaultColor;
+        titleColor = titleColor ?? _defaultColor;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -365,7 +365,7 @@ class ChartPainter extends CustomPainter {
       if (_chart.lines.length == 2 && _chart.indexToUnit.length == 2) {
         color = _chart.lines[0].color;
       } else {
-        color = axisColor;
+        color = titleColor;
       }
 
       TextSpan span = TextSpan(
@@ -383,7 +383,7 @@ class ChartPainter extends CustomPainter {
       if (_chart.lines.length == 2) {
         color = _chart.lines[1].color;
       } else {
-        color = axisColor;
+        color = titleColor;
       }
 
       TextSpan span = TextSpan(
