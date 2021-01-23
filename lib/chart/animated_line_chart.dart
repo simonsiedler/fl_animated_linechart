@@ -192,7 +192,7 @@ class ChartPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     _drawGrid(canvas, size);
-    _drawUnits(canvas, size);
+    // _drawUnits(canvas, size);
     _drawLines(size, canvas);
     _drawAxisValues(canvas, size);
 
