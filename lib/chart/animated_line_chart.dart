@@ -145,7 +145,8 @@ class _AnimatedChart extends AnimatedWidget {
     Animation animation = listenable as Animation;
 
     return CustomPaint(
-      painter: ChartPainter(animation?.value, _chart, _horizontalDragActive, _horizontalDragPosition, tapText: tapText, axisColor: axisColor),
+      painter: ChartPainter(animation?.value, _chart, _horizontalDragActive, _horizontalDragPosition,
+          tapText: tapText, axisColor: axisColor),
     );
   }
 }
@@ -182,9 +183,12 @@ class ChartPainter extends CustomPainter {
   final Color axisColor;
 
   static final TapText _defaultTapText = (prefix, y, unit) => '$prefix: ${y.toStringAsFixed(1)} $unit';
+  static final Color _defaultColor = Colors.black;
 
-  ChartPainter(this._progress, this._chart, this._horizontalDragActive, this._horizontalDragPosition, {TapText tapText, Color axisColor})
-      : tapText = tapText ?? _defaultTapText;
+  ChartPainter(this._progress, this._chart, this._horizontalDragActive, this._horizontalDragPosition,
+      {TapText tapText, Color axisColor})
+      : tapText = tapText ?? _defaultTapText,
+        axisColor = axisColor ?? _defaultColor;
 
   @override
   void paint(Canvas canvas, Size size) {
