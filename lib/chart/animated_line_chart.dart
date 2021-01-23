@@ -1,3 +1,4 @@
+import 'dart:html';
 import 'dart:math';
 
 import 'package:fl_animated_linechart/chart/area_line_chart.dart';
@@ -22,6 +23,7 @@ class AnimatedLineChart extends StatefulWidget {
     this.chart, {
     Key key,
     this.tapText,
+    this.axisColor,
   }) : super(key: key);
 
   @override
@@ -59,6 +61,7 @@ class _AnimatedLineChartState extends State<AnimatedLineChart> with SingleTicker
         widget.chart,
         _animation,
         tapText: widget.tapText,
+        axisColor: wiget.axisColor,
       );
     });
   }
