@@ -383,7 +383,7 @@ class ChartPainter extends CustomPainter {
       if (_chart.lines.length == 2) {
         color = _chart.lines[1].color;
       } else {
-        color = Colors.black54;
+        color = axisColor;
       }
 
       TextSpan span = TextSpan(
