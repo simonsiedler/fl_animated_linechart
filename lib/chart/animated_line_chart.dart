@@ -61,7 +61,7 @@ class _AnimatedLineChartState extends State<AnimatedLineChart> with SingleTicker
         widget.chart,
         _animation,
         tapText: widget.tapText,
-        axisColor: wiget.axisColor,
+        axisColor: widget.axisColor,
       );
     });
   }
