@@ -155,23 +155,14 @@ class ChartPainter extends CustomPainter {
 
   final DateFormat _formatMonthDayHoursMinutes = DateFormat('dd/MM kk:mm');
 
-  final Paint _gridPainter = Paint()
-    ..style = PaintingStyle.stroke
-    ..strokeWidth = 1
-    ..color = Colors.red;
-
-  Paint _linePainter = Paint()
-    ..style = PaintingStyle.stroke
-    ..strokeWidth = 2
-    ..color = Colors.red;
+  Paint _gridPainter = Paint();
+  Paint _linePainter = Paint();
 
   Paint _fillPainter = Paint()
     ..style = PaintingStyle.fill
     ..strokeWidth = 2;
 
-  Paint _tooltipPainter = Paint()
-    ..style = PaintingStyle.fill
-    ..color = Colors.white.withAlpha(230);
+  Paint _tooltipPainter = Paint();
 
   final double _progress;
   final LineChart _chart;
@@ -191,6 +182,20 @@ class ChartPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
+    _gridPainter = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1
+      ..color = titleTextStyle.color.withOpacity(0.26);
+
+    _linePainter = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 2
+      ..color = titleTextStyle.color.withOpacity(0.26);
+
+    _tooltipPainter = Paint()
+      ..style = PaintingStyle.fill
+      ..color = titleTextStyle.color.withAlpha(230);
+
     _drawGrid(canvas, size);
     // _drawUnits(canvas, size);
     _drawLines(size, canvas);
