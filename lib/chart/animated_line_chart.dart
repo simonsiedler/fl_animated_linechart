@@ -16,13 +16,13 @@ typedef TapText = String Function(String prefix, double y, String unit);
 class AnimatedLineChart extends StatefulWidget {
   final LineChart chart;
   final TapText tapText;
-  final Color titleColor;
+  final TextStyle titleTextStyle;
 
   const AnimatedLineChart(
     this.chart, {
     Key key,
     this.tapText,
-    this.titleColor,
+    this.titleTextStyle,
   }) : super(key: key);
 
   @override
@@ -60,7 +60,7 @@ class _AnimatedLineChartState extends State<AnimatedLineChart> with SingleTicker
         widget.chart,
         _animation,
         tapText: widget.tapText,
-        titleColor: widget.titleColor,
+        titleTextStyle: widget.titleTextStyle,
       );
     });
   }
@@ -71,14 +71,14 @@ class _GestureWrapper extends StatefulWidget {
   final LineChart _chart;
   final Animation _animation;
   final TapText tapText;
-  final Color titleColor;
+  final TextStyle titleTextStyle;
 
   const _GestureWrapper(
     this._chart,
     this._animation, {
     Key key,
     this.tapText,
-    this.titleColor,
+    this.titleTextStyle,
   }) : super(key: key);
 
   @override
@@ -98,7 +98,7 @@ class _GestureWrapperState extends State<_GestureWrapper> {
         _horizontalDragPosition,
         animation: widget._animation,
         tapText: widget.tapText,
-        titleColor: widget.titleColor,
+        titleTextStyle: widget.titleTextStyle,
       ),
       onTapDown: (tap) {
         _horizontalDragActive = true;
@@ -133,10 +133,10 @@ class _AnimatedChart extends AnimatedWidget {
   final bool _horizontalDragActive;
   final double _horizontalDragPosition;
   final TapText tapText;
-  final Color titleColor;
+  final TextStyle titleTextStyle;
 
   _AnimatedChart(this._chart, this._horizontalDragActive, this._horizontalDragPosition,
-      {this.tapText, this.titleColor, Key key, Animation animation})
+      {this.tapText, this.titleTextStyle, Key key, Animation animation})
       : super(key: key, listenable: animation);
 
   @override
@@ -145,7 +145,7 @@ class _AnimatedChart extends AnimatedWidget {
 
     return CustomPaint(
       painter: ChartPainter(animation?.value, _chart, _horizontalDragActive, _horizontalDragPosition,
-          tapText: tapText, titleColor: titleColor),
+          tapText: tapText, titleTextStyle: titleTextStyle),
     );
   }
 }
@@ -179,15 +179,15 @@ class ChartPainter extends CustomPainter {
   final double _horizontalDragPosition;
 
   final TapText tapText;
-  final Color titleColor;
+  final TextStyle titleTextStyle;
 
   static final TapText _defaultTapText = (prefix, y, unit) => '$prefix: ${y.toStringAsFixed(1)} $unit';
-  static final Color _defaultColor = Colors.black;
+  static final TextStyle _defaultTextStyle = TextStyle(color: Colors.black, fontWeight: FontWeight.w200, fontSize: 14);
 
   ChartPainter(this._progress, this._chart, this._horizontalDragActive, this._horizontalDragPosition,
-      {TapText tapText, Color titleColor})
+      {TapText tapText, TextStyle titleTextStyle})
       : tapText = tapText ?? _defaultTapText,
-        titleColor = titleColor ?? _defaultColor;
+        titleTextStyle = titleTextStyle ?? _defaultTextStyle;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -360,16 +360,7 @@ class ChartPainter extends CustomPainter {
 
   void _drawUnits(Canvas canvas, Size size) {
     if (_chart.indexToUnit.length > 0) {
-      Color color;
-
-      if (_chart.lines.length == 2 && _chart.indexToUnit.length == 2) {
-        color = _chart.lines[0].color;
-      } else {
-        color = titleColor;
-      }
-
-      TextSpan span = TextSpan(
-          style: TextStyle(color: color, fontWeight: FontWeight.w200, fontSize: 14), text: _chart.indexToUnit[0]);
+      TextSpan span = TextSpan(style: titleTextStyle, text: _chart.indexToUnit[0]);
       TextPainter tp =
           TextPainter(text: span, textAlign: TextAlign.right, textDirection: TextDirectionHelper.getDirection());
       tp.layout();
@@ -378,16 +369,7 @@ class ChartPainter extends CustomPainter {
     }
 
     if (_chart.indexToUnit.length == 2) {
-      Color color;
-
-      if (_chart.lines.length == 2) {
-        color = _chart.lines[1].color;
-      } else {
-        color = titleColor;
-      }
-
-      TextSpan span = TextSpan(
-          style: TextStyle(color: color, fontWeight: FontWeight.w200, fontSize: 14), text: _chart.indexToUnit[1]);
+      TextSpan span = TextSpan(style: titleTextStyle, text: _chart.indexToUnit[1]);
       TextPainter tp =
           TextPainter(text: span, textAlign: TextAlign.right, textDirection: TextDirectionHelper.getDirection());
       tp.layout();

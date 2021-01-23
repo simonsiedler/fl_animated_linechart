@@ -54,7 +54,7 @@ class LineChart {
     this.tapTextFontWeight,
     this.axisTextStyle,
     String formatHoursMinutes = 'kk:mm',
-    String formatDayMonth = 'dd/MM',
+    String formatDayMonth = 'dd.MM.yy',
   })  : this._formatHoursMinutes = DateFormat(formatHoursMinutes),
         this._formatDayMonth = DateFormat(formatDayMonth);
 
