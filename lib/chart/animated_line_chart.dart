@@ -1,4 +1,3 @@
-import 'dart:html';
 import 'dart:math';
 
 import 'package:fl_animated_linechart/chart/area_line_chart.dart';
