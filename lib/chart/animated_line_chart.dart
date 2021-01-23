@@ -158,12 +158,12 @@ class ChartPainter extends CustomPainter {
   final Paint _gridPainter = Paint()
     ..style = PaintingStyle.stroke
     ..strokeWidth = 1
-    ..color = Colors.black26;
+    ..color = Colors.red;
 
   Paint _linePainter = Paint()
     ..style = PaintingStyle.stroke
     ..strokeWidth = 2
-    ..color = Colors.black26;
+    ..color = Colors.red;
 
   Paint _fillPainter = Paint()
     ..style = PaintingStyle.fill
